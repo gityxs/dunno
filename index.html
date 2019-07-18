@@ -1,0 +1,253 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link rel="stylesheet/less" type="text/css" href="style.less" />
+
+    <!-- external -->
+    <link href="http://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+    <script type="text/javascript" src="http://code.createjs.com/soundjs-0.5.2.min.js"></script>
+
+	<script type="text/javascript" src="libs/jquery-1.10.2.js"></script>
+	<script type="text/javascript" src="libs/classy/classy.js"></script>
+	<link href="libs/jquery-ui-1.10.3.custom/css/custom-theme/jquery-ui-1.10.3.custom.css" rel="stylesheet">
+	<script src="libs/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.js"></script>
+	<script type="text/javascript" src="libs/jquery.hotkeys.js"></script>
+    <script type="text/javascript" src="libs/mousetrap.min.js"></script>
+
+	<script src="libs/underscore/underscore.js"></script>
+
+	<script type="text/javascript">less = { env: 'development' };</script>
+	<script type="text/javascript" src="libs/less-1.3.3.min.js"></script>
+	<script type="text/javascript" src="libs/raphael-min.js"></script>
+
+    <!-- ice -->
+	<script src="libs/ice/ice.js"></script>
+	<script src="libs/ice/templates.js"></script>
+	<script src="libs/ice/point.js"></script>
+	<script src="libs/ice/renderer.js"></script>
+	<script src="libs/ice/trig.js"></script>
+	<script src="libs/ice/rand.js"></script>
+	<script src="libs/ice/tooltips.js"></script>
+	<script src="libs/ice/controller.js"></script>
+
+	<script src="sidebar.js"></script>
+	<script src="round_pane.js"></script>
+	<script src="trick_pane.js"></script>
+    <script src="shop_pane.js"></script>
+    <script src="scaling.js"></script>
+	<script src="main.js"></script>
+	<script src="die.js"></script>
+    <script src="earnings.js"></script>
+	<script src="diecontainer.js"></script>
+    <script src="die_shop.js"></script>
+    <script src="scene.js"></script>
+    <script src="die_collection.js"></script>
+	<script src="utils.js"></script>
+    <script src="perk.js"></script>
+    <script src="levelups.js"></script>
+	<script src="trick.js"></script>
+	<script src="rewards.js"></script>
+	<script src="tests.js"></script>
+	<script src="trick_lib.js"></script>
+	<script src="trick_block.js"></script>
+	<script src="roundprocessor.js"></script>
+    <script src="banner.js"></script>
+    <script src="perk_block.js"></script>
+    <script src="perk_pane.js"></script>
+    <script src="upgrade_pane.js"></script>
+    <script src="options_pane.js"></script>
+
+    <script src="keybindings.js"></script>
+    <script src="analytics.js"></script>
+
+    <script src="help.js"></script>
+    <script src="settings.js"></script>
+    <script src="dunno.js"></script>
+    <script src="audio.js"></script>
+    <script src="stats.js"></script>
+    <script src="stats_pane.js"></script>
+
+    <script src="achievement.js"></script>
+    <script src="achievement_block.js"></script>
+    <script src="achievement_pane.js"></script>
+
+    <script src="gameover.js"></script>
+    <script src='https://cdn1.kongregate.com/javascripts/kongregate_api.js'></script>
+
+    <title>Dunno Dice Incremental 1.0</title>
+
+</head>
+<body>
+    <style>
+    .loading {
+        text-align: center;
+        font-size: 20px;
+        width: 700px;
+        color: white;
+        background-color: #0a0a0a;
+        margin: auto auto;
+    }
+    .game_title {
+        font-size: 48px;
+    }
+    #play_button {
+        display: none;
+    }
+    </style>
+    <div class="loading">
+        <div class="logo_holder">
+            <img src="images/psidereal.png">
+        </div>
+        <div class="game_title">Dunno</div>
+        <div id="loading_message">Loading...</div>
+        <div><em id="loading_blurb">The last ones are music and can take awhile!</em></div>
+        <div id="button_holder">
+            &nbsp;
+            <button id="play_button">Play</button>
+        </div>
+    </div>
+
+
+    <div style="display: none" id="html_templates" class="html_templates">
+        <div id="sidebar" class="sidebar">
+            <div id="status_block">
+                <div class="status_line">
+                    <span class="label">Level:</span>
+                    <span id="level" class="label level"></span>
+                    <span style="float: right">
+                        <i id="sounds" class="icon-volume-up"></i>
+                        <i id="music" class="icon-music"></i>
+                        <i id="help" class="icon-question-sign"></i>
+                    </span>
+                </div>
+				<div class="status_line">
+                    <span class="label">Rolls Left:</span>
+                    <span id="rolls_remaining" class="label rolls_remaining"></span>
+                    /
+                    <span id="total_rolls" class="label total_rolls"></span>
+                </div>
+
+                <div class="status_line">
+                    <span class="label">Gold:</span>
+                    <span id="gold" data-val="0" class="label gold">
+                        <span class="large_anim"></span>
+                    </span>
+                </div>
+                <div class="status_line">
+                    <span class="label">XP:</span>
+                    <span id="xp" data-val="0" class="label xp"><span class="large_anim"></span></span>
+                    <div id="xpbar" class="xpbar">
+                    	<div id="xpbar_label" class="bar_label"></div>
+                    </div>
+                </div>
+                <div class="status_line">
+                    <span class="label">BP:</span>
+                    <span id="bp" data-val="0" class="label bp"><span class="large_anim"></span></span>
+                    <div id="bpbar" class="bpbar">
+                    	<div id="bpbar_label" class="bar_label"></div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div id="tabs_holder" class="ui-widget-content">
+            </div>
+            <div id="panes_holder">
+            	<div id="inner_panes_holder">
+            	</div>
+            </div>
+
+        </div>
+
+        <div id="tutorial">
+            <div id="step_holder"></div>
+            <div id="step0" class="step">
+                <p>Welcome to Dunno!</p>
+                <p>You can move this window around at any time.</p>
+                <p>If you skip the tutorial, you can click Help at any time.</p>
+            </div>
+            <div id="step1" class="step">
+                <p>Dunno is a game about rolling dice and making money.  Try to make as much money as you can in a limited number of turns.</p>
+            </div>
+            <div id="step2" class="step">
+                <p>Your dice are on the left, and you can click them to upgrade, once you have some cash.</p>
+                <p>On the right are the tabs where you'll control the game.</p>
+                <p>
+                  Click <i class="icon-play"></i>to see the <strong>Turn</strong> pane.  There, click <strong>Roll</strong> to roll the dice you have.
+                </p>
+            </div>
+            <div id="step3" class="step">
+                <p>Rolling your dice gives you stuff!</p>
+                <p><span class="gold">Gold</span> is for buying dice, upgrading dice, and buying tricks.  <strong>Most dice award you money when you roll them.</strong>
+                </p>
+                <p><span class="xp">Experience points</span> are for levels.  Levels give you bonuses.  <stong>You keep your XP when you start a new game.</strong>
+                </p>
+                <p><span class="bp">Bonus points</span> are for extra turns. <strong>Each extra turn costs more.</strong>  You get these with Blue dice (explained later).</p>
+            </div>
+            <div id="step4" class="step">
+                <p><span class="trick">Tricks</span> are special "moves" you can do, like getting One Pair of the same number in one roll, or Three of a Kind.</p>
+                <p>Click <i class="icon-bolt"></i> to see the tricks you have.  You start with <span class="trick">One Pair</span>.</p>
+                <p>
+                    Tricks usually grant you a bonus on top of what the matching dice give.  Click next to learn more.
+                </p>
+                <p>Tricks are mastered by performing them repeatedly.  Mastering tricks can unlock new ones!</strong>
+                </p>
+            </div>
+            <div id="step5" class="step">
+                <p>
+                    Example die rolls:
+                </p>
+                <p>2, 3: You gain <span class="gold">$5</span></p>
+                <p>2, 2: You gain <span class="gold">$4</span>, plus an extra 1x those earnings (<span class="gold">$4</span>) for the <span class="trick">One Pair</span> trick.</p>
+                <p>2, 2, 3, 3: You gain <span class="gold">$10</span>, plus <span class="gold">$4</span> for the pair of 2s, plus <span class="gold">$6</span> for the pair of 3s, PLUS <span class="gold">$10</span> for <span class="trick">Two Pair</span>, if you've bought that trick.</p>
+            </div>
+            <div id="step6" class="step">
+                <p>Click a die on the left to <strong>upgrade it</strong> for <class="gold">gold.</span></p>
+                <p>Power: Increases the power of your die.  Each step of power increases the number of sides (and therefore the maximum roll).  When it gets big enough, it resets down to a smaller size, but gains a point of Magic (<i class="icon-star"></i>).</p>
+                <p>Multiplier: Multiplies the earnings of the die.  <em>Stacks with <span class="trick">tricks</span>!</em></p>
+
+            </div>
+            <div id="step7" class="step">
+                <p>Magic: Spend the Magic points gained from Power to add something new to the die, depending on the color.  Each color does something different!</p>
+                <p><em>Multiple stars of the same color stack, increasing the effect!</em></p>
+                <p><span class="red">Red</span>: Increases the multiplier of every other die each roll.</p>
+                <p><span class="green">Green</span>: Gains some free power every roll.</p>
+                <p><span class="yellow">Yellow</span>: Earns much more <span class="gold">money</span>.</p>
+                <p><span class="blue">Blue</span>: Earns <span class="bp">bonus points</span>, which add bonus turns.</p>
+                <p><span class="purple">Purple</span>: Earns much more <span class="xp">experience points</span>.</p>
+                <p><span class="pink">Pink</span>: Increases its own multiplier with each roll.</p>
+            </div>
+            <div id="step8" class="step">
+                <p>Perks are special bonuses that you keep when you play the game again.</p>
+                <p>You can earn perks by levelling up from experience points, mastering tricks, or completing achievements.</p>
+                <p>Click <i class="icon-level-up"></i> to see the Perks you've gained from levelling up so far.</p>
+                <p><strong>Don't be discouraged when you lose!</strong></p>
+                <p>When you run out of turns, you can start over but you <strong>keep all your perks.</strong>  That means the next time through will be easier and faster, especially after the first time.</p>
+            </div>
+            <div id="step9" class="step">
+                <p><strong>That's it!</strong></p>
+                <p>This is the second game I've ever released, and though it's a silly, simple grinder, I'm really proud of how it turned out.  Please leave a comment if you can!  Positive or negative, I'll use it to make my next game even better!</p>
+                <p>Thanks for playing!</p>
+            </div>
+
+        </div>
+
+
+	</div>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-70406877-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+</body>
+
+
+</html>
+
